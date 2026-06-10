@@ -16,6 +16,7 @@
     <nav class="nav">
       <a href="#story">Story</a>
       <a href="#details">Details</a>
+      <a href="#dresscode">Dress Code</a>
       <a href="#traffic">Traffic</a>
       <a href="#rsvp">RSVP</a>
     </nav>
@@ -45,7 +46,7 @@
         <h2>誠摯邀請您蒞臨</h2>
         <p>我們即將攜手步入人生的新篇章。</p>
         <p>誠摯邀請您蒞臨，與我們見證這份幸福，分享人生中珍貴而美好的時刻。</p>
-        <p>期待在這個特別的日子裡，與您相聚，留下珍貴回憶 ✨</p>
+        <p>期待在這個特別的日子裡，與您相聚，留下珍貴回憶 🍃</p>
       </div>
     </section>
 
@@ -75,6 +76,36 @@
       </div>
     </section>
 
+    <section class="section dresscode" id="dresscode">
+      <div class="section-inner">
+        <p class="section-kicker">Dress Code</p>
+        <h2>Inspired by Nature</h2>
+        <div class="color-cards">
+          <article class="color-card">
+            <span class="color-dot" style="--color:#A8B2A1"></span>
+            <h3>鼠尾草綠</h3>
+            <p>Sage Green</p>
+          </article>
+          <article class="color-card">
+            <span class="color-dot" style="--color:#D8CFBE"></span>
+            <h3>燕麥奶茶</h3>
+            <p>Oatmeal</p>
+          </article>
+          <article class="color-card">
+            <span class="color-dot" style="--color:#F7F4ED"></span>
+            <h3>象牙白</h3>
+            <p>Ivory</p>
+          </article>
+          <article class="color-card">
+            <span class="color-dot" style="--color:#B0A69A"></span>
+            <h3>暖灰褐</h3>
+            <p>Taupe</p>
+          </article>
+        </div>
+        <p class="dress-note">期待與您相見。</p>
+      </div>
+    </section>
+
     <section class="section traffic" id="traffic">
       <div class="section-inner">
         <p class="section-kicker">Traffic Information</p>
@@ -85,13 +116,94 @@
     </section>
 
     <section class="section rsvp" id="rsvp">
-      <div class="section-inner">
+      <div class="section-inner narrow">
         <p class="section-kicker">RSVP</p>
         <h2>出席回覆</h2>
-        <p class="muted">請於下方填寫表單。送出後會顯示：謝謝您的回覆，期待婚禮當天見到您。</p>
-        <div class="form-frame">
-          <iframe src="https://docs.google.com/forms/d/10K64VJWeCCnYi8UgO9NvzydkgeA1Z28dX3XD3Y3diMo/viewform?embedded=true" width="100%" height="1300" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
-        </div>
+        <p class="muted">請填寫以下資訊，送出後資料會直接回填至婚禮出席統計表。</p>
+
+        <form id="rsvpForm" class="rsvp-card">
+          <div class="form-step is-active" data-step="1">
+            <p class="step-label">Step 1 / 4</p>
+            <h3>基本資訊</h3>
+            <label class="field">
+              <span>您的大名 <em>Your name</em></span>
+              <input type="text" name="guestName" required placeholder="請填寫本名" />
+            </label>
+            <div class="field">
+              <span>與新人的關係 <em>Relationship</em></span>
+              <div class="option-grid">
+                <label><input type="radio" name="relationship" value="羿錚家長親友 Bruce's Parents' Family and Friends" required><span>羿錚家長親友</span></label>
+                <label><input type="radio" name="relationship" value="相怡家長親友 Abee's Parents' Family and Friends"><span>相怡家長親友</span></label>
+                <label><input type="radio" name="relationship" value="羿錚朋友 Bruce's Friend"><span>羿錚朋友</span></label>
+                <label><input type="radio" name="relationship" value="相怡朋友 Abee's Friend"><span>相怡朋友</span></label>
+              </div>
+            </div>
+            <button type="button" class="next-btn" data-next>下一步</button>
+          </div>
+
+          <div class="form-step" data-step="2">
+            <p class="step-label">Step 2 / 4</p>
+            <h3>是否出席</h3>
+            <div class="option-grid two">
+              <label><input type="radio" name="attending" value="當然，一定到! Yes, I will be there 😀" required><span>當然，一定到！</span></label>
+              <label><input type="radio" name="attending" value="無法參加，但我想留下給你們的祝福 Sorry to miss out 😭"><span>無法參加，但想留下祝福</span></label>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="ghost-btn" data-prev>上一步</button>
+              <button type="button" class="next-btn" data-next>下一步</button>
+            </div>
+          </div>
+
+          <div class="form-step" data-step="3">
+            <p class="step-label">Step 3 / 4</p>
+            <h3>出席人數</h3>
+            <div id="attendanceFields" class="counter-grid">
+              <label class="counter-field"><span>大人出席人數</span><select name="adultCount"></select></label>
+              <label class="counter-field"><span>小孩出席人數</span><select name="childCount"></select></label>
+              <label class="counter-field"><span>兒童座椅</span><select name="kidChairCount"></select></label>
+              <label class="counter-field"><span>素食人數</span><select name="vegetarianCount"></select></label>
+            </div>
+            <div id="skipAttendance" class="soft-message">很遺憾無法與您相見，也謝謝您願意留下祝福。</div>
+            <div class="form-actions">
+              <button type="button" class="ghost-btn" data-prev>上一步</button>
+              <button type="button" class="next-btn" data-next>下一步</button>
+            </div>
+          </div>
+
+          <div class="form-step" data-step="4">
+            <p class="step-label">Step 4 / 4</p>
+            <h3>喜帖與祝福</h3>
+            <div id="invitationFields" class="field">
+              <span>是否需要喜帖 <em>Wedding invitation</em></span>
+              <div class="option-grid">
+                <label><input type="radio" name="invitation" value="需要，請寄電子喜帖給我 Yes, I need digital wedding invitation"><span>電子喜帖</span></label>
+                <label><input type="radio" name="invitation" value="需要，請寄紙本喜帖給我 Yes, I need wedding invitation card"><span>紙本喜帖</span></label>
+                <label><input type="radio" name="invitation" value="不用，我已經記起來婚禮資訊了 No, I already remembered the wedding information"><span>不用，我記起來了</span></label>
+              </div>
+            </div>
+            <label id="emailField" class="field conditional-field">
+              <span>電子喜帖寄送 Email</span>
+              <input type="email" name="email" placeholder="name@example.com" />
+            </label>
+            <label id="addressField" class="field conditional-field">
+              <span>紙本喜帖寄送地址</span>
+              <textarea name="address" rows="3" placeholder="請填入郵遞區號與地址"></textarea>
+            </label>
+            <label class="field">
+              <span>有什麼話想跟我們說嗎？</span>
+              <textarea name="message" rows="4" placeholder="Message to us"></textarea>
+            </label>
+            <div class="form-actions">
+              <button type="button" class="ghost-btn" data-prev>上一步</button>
+              <button type="submit" class="submit-btn">送出回覆</button>
+            </div>
+          </div>
+
+          <div id="successMessage" class="success-message" hidden>
+            <h3>謝謝您的回覆</h3>
+            <p>期待婚禮當天見到您。</p>
+          </div>
+        </form>
       </div>
     </section>
   </main>
