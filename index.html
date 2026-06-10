@@ -21,7 +21,7 @@
       <a href="#rsvp">RSVP</a>
     </nav>
     <section class="hero-content">
-      <p class="eyebrow">We're getting married</p>
+      <p class="eyebrow hero-eyebrow">We're getting married</p>
       <h1>Bruce <span>&</span> Abee</h1>
       <p class="date">2027.03.07 · Sun.</p>
       <a class="primary-btn" href="#rsvp">回覆出席 RSVP</a>
@@ -55,9 +55,21 @@
         <p class="section-kicker">Wedding Details</p>
         <h2>婚禮資訊</h2>
         <div class="cards">
-          <article class="card"><span>Date</span><h3>2027.03.07</h3><p>Sunday</p></article>
-          <article class="card"><span>Time</span><h3>12:00</h3><p>開席</p></article>
-          <article class="card"><span>Venue</span><h3>台北萬豪酒店</h3><p>8F Garden Villa</p></article>
+          <article class="card">
+            <span>Date</span>
+            <h3>2027.03.07</h3>
+            <p>Sunday</p>
+          </article>
+          <article class="card">
+            <span>Time</span>
+            <h3>12:00</h3>
+            <p>開席</p>
+          </article>
+          <article class="card">
+            <span>Venue</span>
+            <h3>台北萬豪酒店</h3>
+            <p>8F Garden Villa</p>
+          </article>
         </div>
         <p class="address">台北市中山區樂群二路199號</p>
         <a class="secondary-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E8%90%AC%E8%B1%AA%E9%85%92%E5%BA%97%20%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E6%A8%82%E7%BE%A4%E4%BA%8C%E8%B7%AF199%E8%99%9F" target="_blank" rel="noopener">開啟 Google Maps</a>
@@ -68,24 +80,24 @@
       <div class="section-inner">
         <p class="section-kicker">Dress Code</p>
         <h2>Inspired by Nature</h2>
-        <div class="palette-row">
-          <article class="palette-card">
-            <span class="swatch sage"></span>
+        <div class="dresscode-palette" aria-label="Dress code color palette">
+          <article class="dress-swatch">
+            <span class="swatch-circle sage"></span>
             <h3>鼠尾草綠</h3>
             <p>Sage Green</p>
           </article>
-          <article class="palette-card">
-            <span class="swatch oatmeal"></span>
+          <article class="dress-swatch">
+            <span class="swatch-circle oatmeal"></span>
             <h3>燕麥奶茶</h3>
             <p>Oatmeal</p>
           </article>
-          <article class="palette-card">
-            <span class="swatch ivory"></span>
+          <article class="dress-swatch">
+            <span class="swatch-circle ivory"></span>
             <h3>象牙白</h3>
             <p>Ivory</p>
           </article>
-          <article class="palette-card">
-            <span class="swatch taupe"></span>
+          <article class="dress-swatch">
+            <span class="swatch-circle taupe"></span>
             <h3>暖灰褐</h3>
             <p>Taupe</p>
           </article>
@@ -107,72 +119,100 @@
       <div class="section-inner narrow">
         <p class="section-kicker">RSVP</p>
         <h2>出席回覆</h2>
-        <p class="muted">請留下您的回覆，讓我們為您安排最美好的相聚。</p>
+        <p class="muted rsvp-intro">期待收到您的回覆。</p>
 
-        <form id="rsvpForm" class="rsvp-card">
-          <div class="progress"><span id="stepLabel">Step 1 of 4</span><div><i id="progressBar"></i></div></div>
-
-          <section class="form-step active" data-step="1">
-            <h3>基本資訊</h3>
-            <label>您的大名 <small>Your name</small><input name="name" required placeholder="請輸入姓名" /></label>
-            <fieldset>
-              <legend>與新人的關係 <small>Relationship</small></legend>
-              <div class="option-grid">
-                <label><input type="radio" name="relationship" value="羿錚家長親友 Bruce's Parents' Family and Friends" required><span>羿錚家長親友<br><em>Bruce's Parents' Family and Friends</em></span></label>
-                <label><input type="radio" name="relationship" value="相怡家長親友 Abee's Parents' Family and Friends"><span>相怡家長親友<br><em>Abee's Parents' Family and Friends</em></span></label>
-                <label><input type="radio" name="relationship" value="羿錚朋友 Bruce's Friend"><span>羿錚朋友<br><em>Bruce's Friend</em></span></label>
-                <label><input type="radio" name="relationship" value="相怡朋友 Abee's Friend"><span>相怡朋友<br><em>Abee's Friend</em></span></label>
-              </div>
-            </fieldset>
-          </section>
-
-          <section class="form-step" data-step="2">
-            <h3>是否出席</h3>
-            <fieldset>
-              <legend>Will you attend our wedding?</legend>
-              <div class="option-grid two">
-                <label><input type="radio" name="attendance" value="當然，一定到! Yes, I will be there 😀" required><span>當然，一定到!<br><em>Yes, I will be there 😀</em></span></label>
-                <label><input type="radio" name="attendance" value="無法參加，但我想留下給你們的祝福 Sorry to miss out 😭"><span>無法參加<br><em>Sorry to miss out 😭</em></span></label>
-              </div>
-            </fieldset>
-          </section>
-
-          <section class="form-step attending-only" data-step="3">
-            <h3>出席人數</h3>
-            <div class="number-grid">
-              <label>大人出席人數 <small>Including yourself</small><select name="adults"></select></label>
-              <label>小孩出席人數 <small>Children</small><select name="children"></select></label>
-              <label>兒童座椅 <small>Kid's chairs</small><select name="chairs"></select></label>
-              <label>素食需求人數 <small>Vegetarian meal</small><select name="vegetarian"></select></label>
-            </div>
-          </section>
-
-          <section class="form-step attending-only" data-step="4">
-            <h3>喜帖資訊</h3>
-            <fieldset>
-              <legend>Do you need wedding invitation card?</legend>
-              <div class="option-grid">
-                <label><input type="radio" name="invite" value="需要，請寄電子喜帖給我 Yes, I need digital wedding invitation" required><span>電子喜帖<br><em>Digital invitation</em></span></label>
-                <label><input type="radio" name="invite" value="需要，請寄紙本喜帖給我 Yes, I need wedding invitation card"><span>紙本喜帖<br><em>Printed invitation card</em></span></label>
-                <label><input type="radio" name="invite" value="不用，我已經記起來婚禮資訊了 No, I already remembered the wedding information"><span>不需要<br><em>I have the details</em></span></label>
-              </div>
-            </fieldset>
-            <label class="conditional" id="emailField">電子喜帖寄送 Email<input name="email" type="email" placeholder="example@mail.com" /></label>
-            <label class="conditional" id="addressField">紙本喜帖寄送地址<textarea name="address" rows="3" placeholder="請填入郵遞區號及地址"></textarea></label>
-          </section>
-
-          <section class="form-step" data-step="5">
-            <h3>給我們的話</h3>
-            <label>Message to us<textarea name="message" rows="5" placeholder="留下您的祝福..."></textarea></label>
-          </section>
-
-          <div class="form-actions">
-            <button type="button" class="ghost-btn" id="prevBtn">Back</button>
-            <button type="button" class="secondary-btn" id="nextBtn">Next</button>
-            <button type="submit" class="secondary-btn submit-btn" id="submitBtn">Submit</button>
+        <div class="rsvp-card" id="rsvpCard">
+          <div class="step-meta">
+            <span id="stepLabel">Step 1 of 3</span>
+            <div class="progress"><span id="progressBar"></span></div>
           </div>
-          <p class="form-status" id="formStatus" aria-live="polite"></p>
-        </form>
+
+          <form id="rsvpForm" novalidate>
+            <div class="form-step active" data-step="1">
+              <h3>基本資訊</h3>
+              <label class="field">
+                <span>您的大名</span>
+                <small>Your Name</small>
+                <input type="text" name="guestName" placeholder="請輸入姓名" required>
+              </label>
+
+              <fieldset class="choice-block">
+                <legend>與新人的關係 <small>Relationship</small></legend>
+                <div class="choice-grid">
+                  <label><input type="radio" name="relationship" value="羿錚家長親友 Bruce's Parents' Family and Friends" required><span>羿錚家長親友<em>Bruce's Parents' Family and Friends</em></span></label>
+                  <label><input type="radio" name="relationship" value="相怡家長親友 Abee's Parents' Family and Friends"><span>相怡家長親友<em>Abee's Parents' Family and Friends</em></span></label>
+                  <label><input type="radio" name="relationship" value="羿錚朋友 Bruce's Friend"><span>羿錚朋友<em>Bruce's Friend</em></span></label>
+                  <label><input type="radio" name="relationship" value="相怡朋友 Abee's Friend"><span>相怡朋友<em>Abee's Friend</em></span></label>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="form-step" data-step="2">
+              <h3>出席意願</h3>
+              <fieldset class="choice-block">
+                <legend>是否會出席婚宴？ <small>Will you attend?</small></legend>
+                <div class="choice-grid two">
+                  <label><input type="radio" name="attendance" value="當然，一定到! Yes, I will be there 😀" required><span>當然，一定到!<em>Yes, I will be there 😀</em></span></label>
+                  <label><input type="radio" name="attendance" value="無法參加，但我想留下給你們的祝福 Sorry to miss out 😭"><span>無法參加<em>Sorry to miss out 😭</em></span></label>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="form-step" data-step="3">
+              <h3 id="step3Title">出席資訊</h3>
+
+              <div id="attendingFields">
+                <div class="number-grid">
+                  <label class="field select-field"><span>大人出席人數</span><small>Including yourself</small><select name="adultCount" required></select></label>
+                  <label class="field select-field"><span>小孩出席人數</span><small>Please select 0 if none</small><select name="childCount" required></select></label>
+                  <label class="field select-field"><span>嬰兒座椅數</span><small>Please select 0 if none</small><select name="chairCount" required></select></label>
+                  <label class="field select-field"><span>素食需求人數</span><small>Please select 0 if none</small><select name="vegetarianCount" required></select></label>
+                </div>
+
+                <fieldset class="choice-block invitation-block">
+                  <legend>是否需要喜帖？ <small>Wedding Invitation Card</small></legend>
+                  <div class="choice-grid">
+                    <label><input type="radio" name="invitation" value="需要，請寄電子喜帖給我 Yes, I need digital wedding invitation"><span>電子喜帖<em>Digital invitation</em></span></label>
+                    <label><input type="radio" name="invitation" value="需要，請寄紙本喜帖給我 Yes, I need wedding invitation card"><span>紙本喜帖<em>Printed invitation</em></span></label>
+                    <label><input type="radio" name="invitation" value="不用，我已經記起來婚禮資訊了 No, I already remembered the wedding information"><span>不需要喜帖<em>I have the details</em></span></label>
+                  </div>
+                </fieldset>
+
+                <label class="field conditional" id="emailField">
+                  <span>電子喜帖寄送 Email</span>
+                  <small>Email for digital invitation</small>
+                  <input type="email" name="email" placeholder="example@mail.com">
+                </label>
+
+                <label class="field conditional" id="addressField">
+                  <span>紙本喜帖寄送地址</span>
+                  <small>Address for printed invitation</small>
+                  <textarea name="address" rows="3" placeholder="請填入郵遞區號及地址"></textarea>
+                </label>
+              </div>
+
+              <label class="field">
+                <span>想對我們說的話</span>
+                <small>Message to us</small>
+                <textarea name="message" rows="4" placeholder="留下您的祝福"></textarea>
+              </label>
+            </div>
+
+            <p class="form-error" id="formError" role="alert"></p>
+
+            <div class="form-actions">
+              <button type="button" class="text-btn" id="prevBtn">Back</button>
+              <button type="button" class="primary-form-btn" id="nextBtn">Next</button>
+              <button type="submit" class="primary-form-btn" id="submitBtn">送出回覆</button>
+            </div>
+          </form>
+
+          <div class="success-message" id="successMessage">
+            <p class="section-kicker">Thank You</p>
+            <h3>謝謝您的回覆</h3>
+            <p>期待婚禮當天與您相見。</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -182,6 +222,7 @@
     <a href="#top">Back to top</a>
   </footer>
 
+  <iframe name="hiddenGoogleForm" id="hiddenGoogleForm" title="hidden Google Form submission" style="display:none"></iframe>
   <script src="script.js"></script>
 </body>
 </html>

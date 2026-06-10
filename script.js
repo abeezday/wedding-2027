@@ -1,130 +1,229 @@
 const weddingDate = new Date("2027-03-07T12:00:00+08:00");
 
-function pad(value) { return String(value).padStart(2, "0"); }
-function updateCountdown() {
-  const diff = weddingDate - new Date();
-  const ids = ["days", "hours", "minutes", "seconds"];
-  if (diff <= 0) { ids.forEach(id => document.getElementById(id).textContent = "00"); return; }
-  const seconds = Math.floor(diff / 1000);
-  document.getElementById("days").textContent = Math.floor(seconds / 86400);
-  document.getElementById("hours").textContent = pad(Math.floor((seconds % 86400) / 3600));
-  document.getElementById("minutes").textContent = pad(Math.floor((seconds % 3600) / 60));
-  document.getElementById("seconds").textContent = pad(seconds % 60);
+function pad(value) {
+  return String(value).padStart(2, "0");
 }
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = weddingDate - now;
+
+  if (diff <= 0) {
+    document.getElementById("days").textContent = "00";
+    document.getElementById("hours").textContent = "00";
+    document.getElementById("minutes").textContent = "00";
+    document.getElementById("seconds").textContent = "00";
+    return;
+  }
+
+  const seconds = Math.floor(diff / 1000);
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = pad(hours);
+  document.getElementById("minutes").textContent = pad(minutes);
+  document.getElementById("seconds").textContent = pad(secs);
+}
+
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-const entry = {
+const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfyIvVsf3bES8Ry7PI2CIQUpeXWdNLXV1HU5PCOViYAp2VNGA/formResponse";
+const ENTRY = {
   name: "entry.2047345391",
   relationship: "entry.1339287923",
   attendance: "entry.1336036681",
-  adults: "entry.630238932",
-  children: "entry.31850087",
-  chairs: "entry.1588449523",
+  adult: "entry.630238932",
+  child: "entry.31850087",
+  chair: "entry.1588449523",
   vegetarian: "entry.1535829381",
-  invite: "entry.2080928339",
+  invitation: "entry.2080928339",
   email: "entry.1521896031",
+  messageGeneral: "entry.1716942766",
   address: "entry.1299100011",
-  msgAbsent: "entry.1716942766",
-  msgPaper: "entry.1736010593",
-  msgDigital: "entry.1460457126"
+  messagePrinted: "entry.1736010593",
+  messageDigital: "entry.1460457126"
 };
-const formAction = "https://docs.google.com/forms/d/e/1FAIpQLSfyIvVsf3bES8Ry7PI2CIQUpeXWdNLXV1HU5PCOViYAp2VNGA/formResponse";
+
+const INVITATION_NONE = "不用，我已經記起來婚禮資訊了 No, I already remembered the wedding information";
+const ATTEND_YES = "當然，一定到! Yes, I will be there 😀";
 
 const form = document.getElementById("rsvpForm");
-const steps = [...document.querySelectorAll(".form-step")];
+const formError = document.getElementById("formError");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const submitBtn = document.getElementById("submitBtn");
 const stepLabel = document.getElementById("stepLabel");
 const progressBar = document.getElementById("progressBar");
-const statusEl = document.getElementById("formStatus");
+const successMessage = document.getElementById("successMessage");
 const emailField = document.getElementById("emailField");
 const addressField = document.getElementById("addressField");
-let flow = [1, 2, 3, 4, 5];
-let currentIndex = 0;
+const attendingFields = document.getElementById("attendingFields");
+const step3Title = document.getElementById("step3Title");
+let currentStep = 1;
 
-["adults", "children", "chairs", "vegetarian"].forEach(name => {
-  const select = form.elements[name];
-  for (let i = 0; i <= 5; i++) select.add(new Option(i, i));
-});
-form.elements.adults.value = "1";
+function fillNumberSelects() {
+  ["adultCount", "childCount", "chairCount", "vegetarianCount"].forEach((name) => {
+    const select = form.elements[name];
+    if (!select) return;
+    select.innerHTML = "";
+    for (let i = 0; i <= 5; i += 1) {
+      const option = document.createElement("option");
+      option.value = String(i);
+      option.textContent = String(i);
+      select.appendChild(option);
+    }
+  });
+  form.elements.adultCount.value = "1";
+  form.elements.childCount.value = "0";
+  form.elements.chairCount.value = "0";
+  form.elements.vegetarianCount.value = "0";
+}
+
+function getRadioValue(name) {
+  const selected = form.querySelector(`input[name="${name}"]:checked`);
+  return selected ? selected.value : "";
+}
+
+function setStep(step) {
+  currentStep = step;
+  document.querySelectorAll(".form-step").forEach((el) => {
+    el.classList.toggle("active", Number(el.dataset.step) === currentStep);
+  });
+  stepLabel.textContent = `Step ${currentStep} of 3`;
+  progressBar.style.width = `${(currentStep / 3) * 100}%`;
+  prevBtn.style.visibility = currentStep === 1 ? "hidden" : "visible";
+  nextBtn.style.display = currentStep === 3 ? "none" : "inline-block";
+  submitBtn.style.display = currentStep === 3 ? "inline-block" : "none";
+  formError.textContent = "";
+  updateConditionalFields();
+}
 
 function isAttending() {
-  return form.elements.attendance.value.startsWith("當然");
+  return getRadioValue("attendance") === ATTEND_YES;
 }
-function updateFlow() {
-  flow = isAttending() ? [1, 2, 3, 4, 5] : [1, 2, 5];
-  if (currentIndex >= flow.length) currentIndex = flow.length - 1;
+
+function updateConditionalFields() {
+  const attending = isAttending();
+  if (attendingFields) attendingFields.style.display = attending ? "block" : "none";
+  if (step3Title) step3Title.textContent = attending ? "出席資訊" : "留下祝福";
+
+  const invitation = getRadioValue("invitation");
+  emailField.classList.toggle("show", attending && invitation.includes("digital"));
+  addressField.classList.toggle("show", attending && invitation.includes("wedding invitation card"));
 }
-function showStep() {
-  updateFlow();
-  const stepNum = flow[currentIndex];
-  steps.forEach(s => s.classList.toggle("active", Number(s.dataset.step) === stepNum));
-  prevBtn.style.visibility = currentIndex === 0 ? "hidden" : "visible";
-  nextBtn.style.display = currentIndex === flow.length - 1 ? "none" : "inline-block";
-  submitBtn.style.display = currentIndex === flow.length - 1 ? "inline-block" : "none";
-  stepLabel.textContent = `Step ${currentIndex + 1} of ${flow.length}`;
-  progressBar.style.width = `${((currentIndex + 1) / flow.length) * 100}%`;
-  updateInviteFields();
-}
-function currentStepValid() {
-  const step = steps.find(s => Number(s.dataset.step) === flow[currentIndex]);
-  const fields = [...step.querySelectorAll("input, textarea, select")].filter(el => el.offsetParent !== null);
-  for (const field of fields) {
-    if (!field.checkValidity()) { field.reportValidity(); return false; }
+
+function validateStep() {
+  formError.textContent = "";
+
+  if (currentStep === 1) {
+    if (!form.elements.guestName.value.trim()) {
+      formError.textContent = "請填寫您的姓名。";
+      return false;
+    }
+    if (!getRadioValue("relationship")) {
+      formError.textContent = "請選擇與新人的關係。";
+      return false;
+    }
   }
+
+  if (currentStep === 2 && !getRadioValue("attendance")) {
+    formError.textContent = "請選擇是否出席。";
+    return false;
+  }
+
+  if (currentStep === 3 && isAttending()) {
+    if (!getRadioValue("invitation")) {
+      formError.textContent = "請選擇是否需要喜帖。";
+      return false;
+    }
+    const invitation = getRadioValue("invitation");
+    if (invitation.includes("digital") && !form.elements.email.value.trim()) {
+      formError.textContent = "請填寫電子喜帖寄送 Email。";
+      return false;
+    }
+    if (invitation.includes("wedding invitation card") && !form.elements.address.value.trim()) {
+      formError.textContent = "請填寫紙本喜帖寄送地址。";
+      return false;
+    }
+  }
+
   return true;
 }
-function updateInviteFields() {
-  const invite = form.elements.invite.value;
-  emailField.classList.toggle("show", invite.includes("電子"));
-  addressField.classList.toggle("show", invite.includes("紙本"));
-  form.elements.email.required = invite.includes("電子");
-  form.elements.address.required = invite.includes("紙本");
+
+function postToGoogleForm(data) {
+  const googleForm = document.createElement("form");
+  googleForm.action = FORM_ACTION;
+  googleForm.method = "POST";
+  googleForm.target = "hiddenGoogleForm";
+  googleForm.style.display = "none";
+
+  Object.entries(data).forEach(([name, value]) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = value == null ? "" : String(value);
+    googleForm.appendChild(input);
+  });
+
+  document.body.appendChild(googleForm);
+  googleForm.submit();
+  setTimeout(() => googleForm.remove(), 1000);
 }
-form.addEventListener("change", e => {
-  if (e.target.name === "attendance") { updateFlow(); showStep(); }
-  if (e.target.name === "invite") updateInviteFields();
-});
-nextBtn.addEventListener("click", () => { if (currentStepValid()) { currentIndex++; showStep(); } });
-prevBtn.addEventListener("click", () => { currentIndex--; showStep(); });
 
-form.addEventListener("submit", async e => {
-  e.preventDefault();
-  if (!currentStepValid()) return;
-  statusEl.textContent = "送出中...";
-  submitBtn.disabled = true;
-  const fd = new FormData();
-  fd.append(entry.name, form.elements.name.value.trim());
-  fd.append(entry.relationship, form.elements.relationship.value);
-  fd.append(entry.attendance, form.elements.attendance.value);
+function buildPayload() {
   const attending = isAttending();
-  if (attending) {
-    fd.append(entry.adults, form.elements.adults.value);
-    fd.append(entry.children, form.elements.children.value);
-    fd.append(entry.chairs, form.elements.chairs.value);
-    fd.append(entry.vegetarian, form.elements.vegetarian.value);
-    fd.append(entry.invite, form.elements.invite.value);
-    if (form.elements.invite.value.includes("電子")) {
-      fd.append(entry.email, form.elements.email.value.trim());
-      fd.append(entry.msgDigital, form.elements.message.value.trim());
-    } else if (form.elements.invite.value.includes("紙本")) {
-      fd.append(entry.address, form.elements.address.value.trim());
-      fd.append(entry.msgPaper, form.elements.message.value.trim());
-    } else {
-      fd.append(entry.msgDigital, form.elements.message.value.trim());
-    }
-  } else {
-    fd.append(entry.msgAbsent, form.elements.message.value.trim());
-  }
+  const message = form.elements.message.value.trim();
+  const invitation = attending ? getRadioValue("invitation") : INVITATION_NONE;
 
-  try {
-    await fetch(formAction, { method: "POST", mode: "no-cors", body: fd });
-    form.innerHTML = `<div class="thanks"><p class="section-kicker">Thank you</p><h3>謝謝您的回覆</h3><p>期待婚禮當天見到您。</p></div>`;
-  } catch (error) {
-    statusEl.textContent = "送出時發生問題，請稍後再試。";
-    submitBtn.disabled = false;
-  }
+  const payload = {
+    [ENTRY.name]: form.elements.guestName.value.trim(),
+    [ENTRY.relationship]: getRadioValue("relationship"),
+    [ENTRY.attendance]: getRadioValue("attendance"),
+    [ENTRY.adult]: attending ? form.elements.adultCount.value : "0",
+    [ENTRY.child]: attending ? form.elements.childCount.value : "0",
+    [ENTRY.chair]: attending ? form.elements.chairCount.value : "0",
+    [ENTRY.vegetarian]: attending ? form.elements.vegetarianCount.value : "0",
+    [ENTRY.invitation]: invitation,
+    [ENTRY.email]: attending ? form.elements.email.value.trim() : "",
+    [ENTRY.address]: attending ? form.elements.address.value.trim() : "",
+    [ENTRY.messageGeneral]: message,
+    [ENTRY.messagePrinted]: message,
+    [ENTRY.messageDigital]: message
+  };
+
+  return payload;
+}
+
+fillNumberSelects();
+setStep(1);
+
+form.addEventListener("change", updateConditionalFields);
+
+nextBtn.addEventListener("click", () => {
+  if (!validateStep()) return;
+  setStep(Math.min(currentStep + 1, 3));
 });
-showStep();
+
+prevBtn.addEventListener("click", () => {
+  setStep(Math.max(currentStep - 1, 1));
+});
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!validateStep()) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "送出中...";
+
+  postToGoogleForm(buildPayload());
+
+  setTimeout(() => {
+    form.style.display = "none";
+    document.querySelector(".step-meta").style.display = "none";
+    successMessage.style.display = "block";
+  }, 700);
+});
