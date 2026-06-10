@@ -10,9 +10,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header class="hero" id="top">
     <div class="hero-overlay"></div>
+
     <nav class="nav">
       <a href="#story">Story</a>
       <a href="#details">Details</a>
@@ -20,6 +22,7 @@
       <a href="#traffic">Traffic</a>
       <a href="#rsvp">RSVP</a>
     </nav>
+
     <section class="hero-content">
       <p class="eyebrow hero-eyebrow">We're getting married</p>
       <h1>Bruce <span>&</span> Abee</h1>
@@ -54,23 +57,27 @@
       <div class="section-inner">
         <p class="section-kicker">Wedding Details</p>
         <h2>婚禮資訊</h2>
+
         <div class="cards">
           <article class="card">
             <span>Date</span>
             <h3>2027.03.07</h3>
             <p>Sunday</p>
           </article>
+
           <article class="card">
             <span>Time</span>
             <h3>12:00</h3>
             <p>開席</p>
           </article>
+
           <article class="card">
             <span>Venue</span>
             <h3>台北萬豪酒店</h3>
             <p>8F Garden Villa</p>
           </article>
         </div>
+
         <p class="address">台北市中山區樂群二路199號</p>
         <a class="secondary-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E8%90%AC%E8%B1%AA%E9%85%92%E5%BA%97%20%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E6%A8%82%E7%BE%A4%E4%BA%8C%E8%B7%AF199%E8%99%9F" target="_blank" rel="noopener">開啟 Google Maps</a>
       </div>
@@ -80,29 +87,32 @@
       <div class="section-inner">
         <p class="section-kicker">Dress Code</p>
         <h2>Inspired by Nature</h2>
+
         <div class="dresscode-palette" aria-label="Dress code color palette">
           <article class="dress-swatch">
             <span class="swatch-circle sage"></span>
             <h3>鼠尾草綠</h3>
             <p>Sage Green</p>
           </article>
+
           <article class="dress-swatch">
             <span class="swatch-circle oatmeal"></span>
             <h3>燕麥奶茶</h3>
             <p>Oatmeal</p>
           </article>
+
           <article class="dress-swatch">
             <span class="swatch-circle ivory"></span>
             <h3>象牙白</h3>
             <p>Ivory</p>
           </article>
+
           <article class="dress-swatch">
             <span class="swatch-circle taupe"></span>
             <h3>暖灰褐</h3>
             <p>Taupe</p>
           </article>
         </div>
-        <p class="dress-note">期待與您相見。</p>
       </div>
     </section>
 
@@ -110,7 +120,6 @@
       <div class="section-inner">
         <p class="section-kicker">Traffic Information</p>
         <h2>交通資訊</h2>
-        <p class="muted">以下資訊來自台北萬豪酒店提供之地圖卡。</p>
         <img class="map" src="assets/map.jpg" alt="台北萬豪酒店交通地圖" />
       </div>
     </section>
@@ -119,7 +128,6 @@
       <div class="section-inner narrow">
         <p class="section-kicker">RSVP</p>
         <h2>出席回覆</h2>
-        <p class="muted rsvp-intro">期待收到您的回覆。</p>
 
         <div class="rsvp-card" id="rsvpCard">
           <div class="step-meta">
@@ -130,6 +138,7 @@
           <form id="rsvpForm" novalidate>
             <div class="form-step active" data-step="1">
               <h3>基本資訊</h3>
+
               <label class="field">
                 <span>您的大名</span>
                 <small>Your Name</small>
@@ -138,22 +147,47 @@
 
               <fieldset class="choice-block">
                 <legend>與新人的關係 <small>Relationship</small></legend>
+
                 <div class="choice-grid">
-                  <label><input type="radio" name="relationship" value="羿錚家長親友 Bruce's Parents' Family and Friends" required><span>羿錚家長親友<em>Bruce's Parents' Family and Friends</em></span></label>
-                  <label><input type="radio" name="relationship" value="相怡家長親友 Abee's Parents' Family and Friends"><span>相怡家長親友<em>Abee's Parents' Family and Friends</em></span></label>
-                  <label><input type="radio" name="relationship" value="羿錚朋友 Bruce's Friend"><span>羿錚朋友<em>Bruce's Friend</em></span></label>
-                  <label><input type="radio" name="relationship" value="相怡朋友 Abee's Friend"><span>相怡朋友<em>Abee's Friend</em></span></label>
+                  <label>
+                    <input type="radio" name="relationship" value="羿錚家長親友 Bruce's Parents' Family and Friends" required>
+                    <span>羿錚家長親友<em>Bruce's Parents' Family and Friends</em></span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="relationship" value="相怡家長親友 Abee's Parents' Family and Friends">
+                    <span>相怡家長親友<em>Abee's Parents' Family and Friends</em></span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="relationship" value="羿錚朋友 Bruce's Friend">
+                    <span>羿錚朋友<em>Bruce's Friend</em></span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="relationship" value="相怡朋友 Abee's Friend">
+                    <span>相怡朋友<em>Abee's Friend</em></span>
+                  </label>
                 </div>
               </fieldset>
             </div>
 
             <div class="form-step" data-step="2">
               <h3>出席意願</h3>
+
               <fieldset class="choice-block">
                 <legend>是否會出席婚宴？ <small>Will you attend?</small></legend>
+
                 <div class="choice-grid two">
-                  <label><input type="radio" name="attendance" value="當然，一定到! Yes, I will be there 😀" required><span>當然，一定到!<em>Yes, I will be there 😀</em></span></label>
-                  <label><input type="radio" name="attendance" value="無法參加，但我想留下給你們的祝福 Sorry to miss out 😭"><span>無法參加<em>Sorry to miss out 😭</em></span></label>
+                  <label>
+                    <input type="radio" name="attendance" value="當然，一定到! Yes, I will be there 😀" required>
+                    <span>當然，一定到!<em>Yes, I will be there 😀</em></span>
+                  </label>
+
+                  <label>
+                    <input type="radio" name="attendance" value="無法參加，但我想留下給你們的祝福 Sorry to miss out 😭">
+                    <span>無法參加<em>Sorry to miss out 😭</em></span>
+                  </label>
                 </div>
               </fieldset>
             </div>
@@ -163,18 +197,49 @@
 
               <div id="attendingFields">
                 <div class="number-grid">
-                  <label class="field select-field"><span>大人出席人數</span><small>Including yourself</small><select name="adultCount" required></select></label>
-                  <label class="field select-field"><span>小孩出席人數</span><small>Please select 0 if none</small><select name="childCount" required></select></label>
-                  <label class="field select-field"><span>嬰兒座椅數</span><small>Please select 0 if none</small><select name="chairCount" required></select></label>
-                  <label class="field select-field"><span>素食需求人數</span><small>Please select 0 if none</small><select name="vegetarianCount" required></select></label>
+                  <label class="field select-field">
+                    <span>大人出席人數</span>
+                    <small>Including yourself</small>
+                    <select name="adultCount" required></select>
+                  </label>
+
+                  <label class="field select-field">
+                    <span>小孩出席人數</span>
+                    <small>Please select 0 if none</small>
+                    <select name="childCount" required></select>
+                  </label>
+
+                  <label class="field select-field">
+                    <span>嬰兒座椅數</span>
+                    <small>Please select 0 if none</small>
+                    <select name="chairCount" required></select>
+                  </label>
+
+                  <label class="field select-field">
+                    <span>素食需求人數</span>
+                    <small>Please select 0 if none</small>
+                    <select name="vegetarianCount" required></select>
+                  </label>
                 </div>
 
                 <fieldset class="choice-block invitation-block">
                   <legend>是否需要喜帖？ <small>Wedding Invitation Card</small></legend>
+
                   <div class="choice-grid">
-                    <label><input type="radio" name="invitation" value="需要，請寄電子喜帖給我 Yes, I need digital wedding invitation"><span>電子喜帖<em>Digital invitation</em></span></label>
-                    <label><input type="radio" name="invitation" value="需要，請寄紙本喜帖給我 Yes, I need wedding invitation card"><span>紙本喜帖<em>Printed invitation</em></span></label>
-                    <label><input type="radio" name="invitation" value="不用，我已經記起來婚禮資訊了 No, I already remembered the wedding information"><span>不需要喜帖<em>I have the details</em></span></label>
+                    <label>
+                      <input type="radio" name="invitation" value="需要，請寄電子喜帖給我 Yes, I need digital wedding invitation">
+                      <span>電子喜帖<em>Digital invitation</em></span>
+                    </label>
+
+                    <label>
+                      <input type="radio" name="invitation" value="需要，請寄紙本喜帖給我 Yes, I need wedding invitation card">
+                      <span>紙本喜帖<em>Printed invitation</em></span>
+                    </label>
+
+                    <label>
+                      <input type="radio" name="invitation" value="不用，我已經記起來婚禮資訊了 No, I already remembered the wedding information">
+                      <span>不需要喜帖<em>I have the details</em></span>
+                    </label>
                   </div>
                 </fieldset>
 
