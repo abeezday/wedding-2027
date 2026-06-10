@@ -1,293 +1,261 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bruce & Abee Wedding</title>
-  <meta name="description" content="Bruce & Abee Wedding Invitation - 2027.03.07" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-</head>
+const weddingDate = new Date("2027-03-07T12:00:00+08:00");
 
-<body>
-  <header class="hero" id="top">
-    <div class="hero-overlay"></div>
+function pad(value) {
+  return String(value).padStart(2, "0");
+}
 
-    <nav class="nav">
-      <a href="#story">Story</a>
-      <a href="#details">Details</a>
-      <a href="#dresscode">Dress Code</a>
-      <a href="#traffic">Traffic</a>
-      <a href="#rsvp">RSVP</a>
-    </nav>
+function updateCountdown() {
+  const now = new Date();
+  const diff = weddingDate - now;
 
-    <section class="hero-content">
-      <p class="eyebrow hero-eyebrow">We're getting married</p>
-      <h1>Bruce <span>&</span> Abee</h1>
-      <p class="date">2027.03.07 · Sun.</p>
-      <a class="primary-btn" href="#rsvp">回覆出席 RSVP</a>
-    </section>
-  </header>
+  if (diff <= 0) {
+    document.getElementById("days").textContent = "00";
+    document.getElementById("hours").textContent = "00";
+    document.getElementById("minutes").textContent = "00";
+    document.getElementById("seconds").textContent = "00";
+    return;
+  }
 
-  <main>
-    <section class="countdown-section">
-      <p class="section-kicker">Counting Down</p>
-      <h2>距離婚禮還有</h2>
-      <div class="countdown" aria-live="polite">
-        <div><strong id="days">--</strong><span>Days</span></div>
-        <div><strong id="hours">--</strong><span>Hours</span></div>
-        <div><strong id="minutes">--</strong><span>Minutes</span></div>
-        <div><strong id="seconds">--</strong><span>Seconds</span></div>
-      </div>
-    </section>
+  const seconds = Math.floor(diff / 1000);
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
 
-    <section class="section story" id="story">
-      <div class="section-inner narrow">
-        <p class="section-kicker">Our Invitation</p>
-        <h2>誠摯邀請您蒞臨</h2>
-        <p>我們即將攜手步入人生的新篇章。</p>
-        <p>誠摯邀請您蒞臨，與我們見證這份幸福，分享人生中珍貴而美好的時刻。</p>
-        <p>期待在這個特別的日子裡，與您相聚，留下珍貴回憶 🍃</p>
-      </div>
-    </section>
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = pad(hours);
+  document.getElementById("minutes").textContent = pad(minutes);
+  document.getElementById("seconds").textContent = pad(secs);
+}
 
-    <section class="section details" id="details">
-      <div class="section-inner">
-        <p class="section-kicker">Wedding Details</p>
-        <h2>婚禮資訊</h2>
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
-        <div class="cards">
-          <article class="card">
-            <span>Date</span>
-            <h3>2027.03.07</h3>
-            <p>Sunday</p>
-          </article>
+const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfyIvVsf3bES8Ry7PI2CIQUpeXWdNLXV1HU5PCOViYAp2VNGA/formResponse";
 
-          <article class="card">
-            <span>Time</span>
-            <h3>12:00</h3>
-            <p>開席</p>
-          </article>
+const ENTRY = {
+  name: "entry.2047345391",
+  relationship: "entry.1339287923",
+  attendance: "entry.1336036681",
+  adult: "entry.630238932",
+  child: "entry.31850087",
+  chair: "entry.1588449523",
+  vegetarian: "entry.1535829381",
+  invitation: "entry.2080928339",
+  email: "entry.1521896031",
+  messageGeneral: "entry.1716942766",
+  address: "entry.1299100011",
+  messagePrinted: "entry.1736010593",
+  messageDigital: "entry.1460457126"
+};
 
-          <article class="card">
-            <span>Venue</span>
-            <h3>台北萬豪酒店</h3>
-            <p>8F Garden Villa</p>
-          </article>
-        </div>
+const INVITATION_NONE = "不用，我已經記起來婚禮資訊了 No, I already remembered the wedding information";
+const ATTEND_YES = "當然，一定到! Yes, I will be there 😀";
 
-        <p class="address">台北市中山區樂群二路199號</p>
-        <a class="secondary-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E8%90%AC%E8%B1%AA%E9%85%92%E5%BA%97%20%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E6%A8%82%E7%BE%A4%E4%BA%8C%E8%B7%AF199%E8%99%9F" target="_blank" rel="noopener">開啟 Google Maps</a>
-      </div>
-    </section>
+const form = document.getElementById("rsvpForm");
+const formError = document.getElementById("formError");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const submitBtn = document.getElementById("submitBtn");
+const stepLabel = document.getElementById("stepLabel");
+const progressBar = document.getElementById("progressBar");
+const successMessage = document.getElementById("successMessage");
+const emailField = document.getElementById("emailField");
+const addressField = document.getElementById("addressField");
+const attendingFields = document.getElementById("attendingFields");
+const step3Title = document.getElementById("step3Title");
 
-    <section class="section dresscode" id="dresscode">
-      <div class="section-inner">
-        <p class="section-kicker">Dress Code</p>
-        <h2>Inspired by Nature</h2>
+let currentStep = 1;
 
-        <div class="dresscode-palette" aria-label="Dress code color palette">
-          <article class="dress-swatch">
-            <span class="swatch-circle sage"></span>
-            <h3>鼠尾草綠</h3>
-            <p>Sage Green</p>
-          </article>
+function fillNumberSelects() {
+  ["adultCount", "childCount", "chairCount", "vegetarianCount"].forEach((name) => {
+    const select = form.elements[name];
+    if (!select) return;
 
-          <article class="dress-swatch">
-            <span class="swatch-circle oatmeal"></span>
-            <h3>燕麥奶茶</h3>
-            <p>Oatmeal</p>
-          </article>
+    select.innerHTML = "";
 
-          <article class="dress-swatch">
-            <span class="swatch-circle ivory"></span>
-            <h3>象牙白</h3>
-            <p>Ivory</p>
-          </article>
+    for (let i = 0; i <= 5; i += 1) {
+      const option = document.createElement("option");
+      option.value = String(i);
+      option.textContent = String(i);
+      select.appendChild(option);
+    }
+  });
 
-          <article class="dress-swatch">
-            <span class="swatch-circle taupe"></span>
-            <h3>暖灰褐</h3>
-            <p>Taupe</p>
-          </article>
-        </div>
-      </div>
-    </section>
+  form.elements.adultCount.value = "1";
+  form.elements.childCount.value = "0";
+  form.elements.chairCount.value = "0";
+  form.elements.vegetarianCount.value = "0";
+}
 
-    <section class="section traffic" id="traffic">
-      <div class="section-inner">
-        <p class="section-kicker">Traffic Information</p>
-        <h2>交通資訊</h2>
-        <img class="map" src="assets/map.jpg" alt="台北萬豪酒店交通地圖" />
-      </div>
-    </section>
+function getRadioValue(name) {
+  const selected = form.querySelector(`input[name="${name}"]:checked`);
+  return selected ? selected.value : "";
+}
 
-    <section class="section rsvp" id="rsvp">
-      <div class="section-inner narrow">
-        <p class="section-kicker">RSVP</p>
-        <h2>出席回覆</h2>
+function setStep(step) {
+  currentStep = step;
 
-        <div class="rsvp-card" id="rsvpCard">
-          <div class="step-meta">
-            <span id="stepLabel">Step 1 of 3</span>
-            <div class="progress"><span id="progressBar"></span></div>
-          </div>
+  document.querySelectorAll(".form-step").forEach((el) => {
+    el.classList.toggle("active", Number(el.dataset.step) === currentStep);
+  });
 
-          <form id="rsvpForm" novalidate>
-            <div class="form-step active" data-step="1">
-              <h3>基本資訊</h3>
+  stepLabel.textContent = `Step ${currentStep} of 3`;
+  progressBar.style.width = `${(currentStep / 3) * 100}%`;
 
-              <label class="field">
-                <span>您的大名</span>
-                <small>Your Name</small>
-                <input type="text" name="guestName" placeholder="請輸入姓名" required>
-              </label>
+  prevBtn.style.visibility = currentStep === 1 ? "hidden" : "visible";
+  nextBtn.style.display = currentStep === 3 ? "none" : "inline-block";
+  submitBtn.style.display = currentStep === 3 ? "inline-block" : "none";
 
-              <fieldset class="choice-block">
-                <legend>與新人的關係 <small>Relationship</small></legend>
+  formError.textContent = "";
+  updateConditionalFields();
+}
 
-                <div class="choice-grid">
-                  <label>
-                    <input type="radio" name="relationship" value="羿錚家長親友 Bruce's Parents' Family and Friends" required>
-                    <span>羿錚家長親友<em>Bruce's Parents' Family and Friends</em></span>
-                  </label>
+function isAttending() {
+  return getRadioValue("attendance") === ATTEND_YES;
+}
 
-                  <label>
-                    <input type="radio" name="relationship" value="相怡家長親友 Abee's Parents' Family and Friends">
-                    <span>相怡家長親友<em>Abee's Parents' Family and Friends</em></span>
-                  </label>
+function updateConditionalFields() {
+  const attending = isAttending();
 
-                  <label>
-                    <input type="radio" name="relationship" value="羿錚朋友 Bruce's Friend">
-                    <span>羿錚朋友<em>Bruce's Friend</em></span>
-                  </label>
+  if (attendingFields) {
+    attendingFields.style.display = attending ? "block" : "none";
+  }
 
-                  <label>
-                    <input type="radio" name="relationship" value="相怡朋友 Abee's Friend">
-                    <span>相怡朋友<em>Abee's Friend</em></span>
-                  </label>
-                </div>
-              </fieldset>
-            </div>
+  if (step3Title) {
+    step3Title.textContent = attending ? "出席資訊" : "留下祝福";
+  }
 
-            <div class="form-step" data-step="2">
-              <h3>出席意願</h3>
+  const invitation = getRadioValue("invitation");
 
-              <fieldset class="choice-block">
-                <legend>是否會出席婚宴？ <small>Will you attend?</small></legend>
+  emailField.classList.toggle("show", attending && invitation.includes("digital"));
+  addressField.classList.toggle("show", attending && invitation.includes("wedding invitation card"));
+}
 
-                <div class="choice-grid two">
-                  <label>
-                    <input type="radio" name="attendance" value="當然，一定到! Yes, I will be there 😀" required>
-                    <span>當然，一定到!<em>Yes, I will be there 😀</em></span>
-                  </label>
+function validateStep() {
+  formError.textContent = "";
 
-                  <label>
-                    <input type="radio" name="attendance" value="無法參加，但我想留下給你們的祝福 Sorry to miss out 😭">
-                    <span>無法參加<em>Sorry to miss out 😭</em></span>
-                  </label>
-                </div>
-              </fieldset>
-            </div>
+  if (currentStep === 1) {
+    if (!form.elements.guestName.value.trim()) {
+      formError.textContent = "請填寫您的姓名。";
+      return false;
+    }
 
-            <div class="form-step" data-step="3">
-              <h3 id="step3Title">出席資訊</h3>
+    if (!getRadioValue("relationship")) {
+      formError.textContent = "請選擇與新人的關係。";
+      return false;
+    }
+  }
 
-              <div id="attendingFields">
-                <div class="number-grid">
-                  <label class="field select-field">
-                    <span>大人出席人數</span>
-                    <small>Including yourself</small>
-                    <select name="adultCount" required></select>
-                  </label>
+  if (currentStep === 2 && !getRadioValue("attendance")) {
+    formError.textContent = "請選擇是否出席。";
+    return false;
+  }
 
-                  <label class="field select-field">
-                    <span>小孩出席人數</span>
-                    <small>Please select 0 if none</small>
-                    <select name="childCount" required></select>
-                  </label>
+  if (currentStep === 3 && isAttending()) {
+    if (!getRadioValue("invitation")) {
+      formError.textContent = "請選擇是否需要喜帖。";
+      return false;
+    }
 
-                  <label class="field select-field">
-                    <span>嬰兒座椅數</span>
-                    <small>Please select 0 if none</small>
-                    <select name="chairCount" required></select>
-                  </label>
+    const invitation = getRadioValue("invitation");
 
-                  <label class="field select-field">
-                    <span>素食需求人數</span>
-                    <small>Please select 0 if none</small>
-                    <select name="vegetarianCount" required></select>
-                  </label>
-                </div>
+    if (invitation.includes("digital") && !form.elements.email.value.trim()) {
+      formError.textContent = "請填寫電子喜帖寄送 Email。";
+      return false;
+    }
 
-                <fieldset class="choice-block invitation-block">
-                  <legend>是否需要喜帖？ <small>Wedding Invitation Card</small></legend>
+    if (invitation.includes("wedding invitation card") && !form.elements.address.value.trim()) {
+      formError.textContent = "請填寫紙本喜帖寄送地址。";
+      return false;
+    }
+  }
 
-                  <div class="choice-grid">
-                    <label>
-                      <input type="radio" name="invitation" value="需要，請寄電子喜帖給我 Yes, I need digital wedding invitation">
-                      <span>電子喜帖<em>Digital invitation</em></span>
-                    </label>
+  return true;
+}
 
-                    <label>
-                      <input type="radio" name="invitation" value="需要，請寄紙本喜帖給我 Yes, I need wedding invitation card">
-                      <span>紙本喜帖<em>Printed invitation</em></span>
-                    </label>
+function postToGoogleForm(data) {
+  const googleForm = document.createElement("form");
+  googleForm.action = FORM_ACTION;
+  googleForm.method = "POST";
+  googleForm.target = "hiddenGoogleForm";
+  googleForm.style.display = "none";
 
-                    <label>
-                      <input type="radio" name="invitation" value="不用，我已經記起來婚禮資訊了 No, I already remembered the wedding information">
-                      <span>不需要喜帖<em>I have the details</em></span>
-                    </label>
-                  </div>
-                </fieldset>
+  Object.entries(data).forEach(([name, value]) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = value == null ? "" : String(value);
+    googleForm.appendChild(input);
+  });
 
-                <label class="field conditional" id="emailField">
-                  <span>電子喜帖寄送 Email</span>
-                  <small>Email for digital invitation</small>
-                  <input type="email" name="email" placeholder="example@mail.com">
-                </label>
+  document.body.appendChild(googleForm);
+  googleForm.submit();
 
-                <label class="field conditional" id="addressField">
-                  <span>紙本喜帖寄送地址</span>
-                  <small>Address for printed invitation</small>
-                  <textarea name="address" rows="3" placeholder="請填入郵遞區號及地址"></textarea>
-                </label>
-              </div>
+  setTimeout(() => googleForm.remove(), 1000);
+}
 
-              <label class="field">
-                <span>想對我們說的話</span>
-                <small>Message to us</small>
-                <textarea name="message" rows="4" placeholder="留下您的祝福"></textarea>
-              </label>
-            </div>
+function buildPayload() {
+  const attending = isAttending();
+  const message = form.elements.message.value.trim();
+  const invitation = attending ? getRadioValue("invitation") : INVITATION_NONE;
 
-            <p class="form-error" id="formError" role="alert"></p>
+  const payload = {
+    [ENTRY.name]: form.elements.guestName.value.trim(),
+    [ENTRY.relationship]: getRadioValue("relationship"),
+    [ENTRY.attendance]: getRadioValue("attendance"),
+    [ENTRY.adult]: attending ? form.elements.adultCount.value : "0",
+    [ENTRY.child]: attending ? form.elements.childCount.value : "0",
+    [ENTRY.chair]: attending ? form.elements.chairCount.value : "0",
+    [ENTRY.vegetarian]: attending ? form.elements.vegetarianCount.value : "0",
+    [ENTRY.invitation]: invitation,
+    [ENTRY.email]: attending ? form.elements.email.value.trim() : "",
+    [ENTRY.address]: attending ? form.elements.address.value.trim() : "",
+    [ENTRY.messageGeneral]: message,
+    [ENTRY.messagePrinted]: message,
+    [ENTRY.messageDigital]: message
+  };
 
-            <div class="form-actions">
-              <button type="button" class="text-btn" id="prevBtn">Back</button>
-              <button type="button" class="primary-form-btn" id="nextBtn">Next</button>
-              <button type="submit" class="primary-form-btn" id="submitBtn">送出回覆</button>
-            </div>
-          </form>
+  if (!attending) {
+    payload.pageHistory = "0,4";
+  } else if (invitation.includes("digital")) {
+    payload.pageHistory = "0,1,2";
+  } else if (invitation.includes("wedding invitation card")) {
+    payload.pageHistory = "0,1,3";
+  } else {
+    payload.pageHistory = "0,1";
+  }
 
-          <div class="success-message" id="successMessage">
-            <p class="section-kicker">Thank You</p>
-            <h3>謝謝您的回覆</h3>
-            <p>期待婚禮當天與您相見。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+  return payload;
+}
 
-  <footer>
-    <p>Bruce & Abee</p>
-    <a href="#top">Back to top</a>
-  </footer>
+fillNumberSelects();
+setStep(1);
 
-  <iframe name="hiddenGoogleForm" id="hiddenGoogleForm" title="hidden Google Form submission" style="display:none"></iframe>
-  <script src="script.js"></script>
-</body>
-</html>
+form.addEventListener("change", updateConditionalFields);
+
+nextBtn.addEventListener("click", () => {
+  if (!validateStep()) return;
+  setStep(Math.min(currentStep + 1, 3));
+});
+
+prevBtn.addEventListener("click", () => {
+  setStep(Math.max(currentStep - 1, 1));
+});
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  if (!validateStep()) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "送出中...";
+
+  postToGoogleForm(buildPayload());
+
+  setTimeout(() => {
+    form.style.display = "none";
+    document.querySelector(".step-meta").style.display = "none";
+    successMessage.style.display = "block";
+  }, 700);
+});
