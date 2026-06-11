@@ -208,6 +208,15 @@ h2 {
   font-size: 18px;
 }
 
+.invitation-copy {
+  font-size: 19px;
+  line-height: 2;
+}
+
+.invitation-copy p {
+  margin: 0 0 6px;
+}
+
 .details {
   background: var(--beige);
 }
