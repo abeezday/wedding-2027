@@ -334,6 +334,7 @@ h2 {
 
 .rsvp {
   background: var(--beige);
+  padding-bottom: 0;
 }
 
 .rsvp-card {
@@ -672,10 +673,10 @@ footer a {
   }
 
   .rsvp-card {
-    padding: 26px 20px 44px;
-    border-radius: 28px;
-    margin-bottom: 56px;
-  }
+  padding: 26px 20px 44px;
+  border-radius: 28px;
+  margin-bottom: 24px;
+}
 
   .step-meta {
     align-items: flex-start;
@@ -715,9 +716,8 @@ footer a {
     height: 88px;
   }
 
-  footer {
-    margin-top: 64px;
-  }
+ footer {
+  margin-top: 0;
 }
 
 .success-copy {
