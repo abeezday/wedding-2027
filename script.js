@@ -225,33 +225,37 @@ return payload;
   return payload;
 }
 
-fillNumberSelects();
-setStep(1);
+function initRsvpForm() {
+  fillNumberSelects();
+  setStep(1);
 
-form.addEventListener("change", updateConditionalFields);
+  form.addEventListener("change", updateConditionalFields);
 
-nextBtn.addEventListener("click", () => {
-  if (!validateStep()) return;
-  setStep(Math.min(currentStep + 1, 3));
-});
+  nextBtn.addEventListener("click", () => {
+    if (!validateStep()) return;
+    setStep(Math.min(currentStep + 1, 3));
+  });
 
-prevBtn.addEventListener("click", () => {
-  setStep(Math.max(currentStep - 1, 1));
-});
+  prevBtn.addEventListener("click", () => {
+    setStep(Math.max(currentStep - 1, 1));
+  });
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-  if (!validateStep()) return;
+    if (!validateStep()) return;
 
-  submitBtn.disabled = true;
-  submitBtn.textContent = "送出中...";
+    submitBtn.disabled = true;
+    submitBtn.textContent = "送出中...";
 
-  postToGoogleForm(buildPayload());
+    postToGoogleForm(buildPayload());
 
-  setTimeout(() => {
-    form.style.display = "none";
-    document.querySelector(".step-meta").style.display = "none";
-    successMessage.style.display = "block";
-  }, 700);
-});
+    setTimeout(() => {
+      form.style.display = "none";
+      document.querySelector(".step-meta").style.display = "none";
+      successMessage.style.display = "block";
+    }, 1500);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initRsvpForm);
