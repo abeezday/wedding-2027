@@ -216,12 +216,6 @@ function buildPayload() {
     [ENTRY.messageDigital]: message
   };
 
-const payload = {
-  ...
-};
-
-return payload;  
-
   return payload;
 }
 
