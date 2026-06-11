@@ -603,29 +603,34 @@ footer a {
 
 @media (max-width: 760px) {
 .nav {
-  width: calc(100% - 24px);
+  position: fixed;
+  top: auto;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
-  top: 14px;
-  padding: 12px 18px;
-  font-size: 11px;
-  overflow-x: auto;
-  justify-content: center;
+  width: calc(100% - 36px);
+  padding: 10px 14px;
+  border-radius: 999px;
+  z-index: 20;
 }
 
 .nav-links {
-  display: flex;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  align-items: center;
+  text-align: center;
+}
+
+.nav-links a {
+  font-size: 14px;
+  letter-spacing: .04em;
+  white-space: nowrap;
 }
 
 .nav-links span {
-  opacity: .35;
-}  
-
-.nav-links a {
-  white-space: nowrap;
-  font-size: 13px;
-}  
+  display: none;
+}
 
   .hero {
     min-height: 86vh;
