@@ -579,20 +579,22 @@ textarea {
 }
 
 .success-message p {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .success-copy {
   margin: 0;
   font-size: 20px;
   color: var(--brown);
+  line-height: 1.7;
 }
 
 .success-date {
-  margin: 8px 0;
+  margin: 0;
   font-size: 20px;
   font-weight: 700;
   color: var(--brown);
+  line-height: 1.7;
   letter-spacing: .02em;
 }
 
