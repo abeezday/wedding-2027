@@ -69,6 +69,13 @@ a {
   box-shadow: 0 12px 34px rgba(0, 0, 0, .08);
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  white-space: nowrap;
+}
+
 .hero-content {
   position: relative;
   z-index: 1;
@@ -204,11 +211,16 @@ h2 {
   width: min(760px, 100%);
 }
 
+.story .section-inner {
+  text-align: center;
+}
+
 .story p:not(.section-kicker) {
   font-size: 18px;
 }
 
-.invitation-copy {
+.invitation-copy,
+.story .invitation-copy {
   width: min(720px, 100%);
   margin: 0 auto;
   text-align: center;
@@ -216,7 +228,8 @@ h2 {
   line-height: 2;
 }
 
-.invitation-copy p {
+.invitation-copy p,
+.story .invitation-copy p {
   margin: 0 0 6px;
 }
 
@@ -254,12 +267,12 @@ h2 {
   font-weight: 500;
 }
 
-.card p {
-  margin: 0;
+.card p,
+.address {
+  margin: 0 auto;
 }
 
 .address {
-  margin: 0 auto;
   font-size: 18px;
 }
 
@@ -334,7 +347,7 @@ h2 {
 
 .rsvp {
   background: var(--beige);
-  padding-bottom: 0;
+  padding-bottom: 56px;
 }
 
 .rsvp-card {
@@ -569,6 +582,27 @@ textarea {
   font-size: 18px;
 }
 
+.success-copy {
+  margin: 0;
+  font-size: 18px;
+}
+
+.success-date {
+  margin: 18px 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 48px;
+  color: var(--green-deep);
+  letter-spacing: .08em;
+}
+
+.signature {
+  margin-top: 36px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 42px;
+  color: var(--green-deep);
+  letter-spacing: .05em;
+}
+
 footer {
   padding: 42px 20px;
   text-align: center;
@@ -584,22 +618,6 @@ footer p {
 
 footer a {
   opacity: .82;
-}
-
-.story .section-inner {
-  text-align: center;
-}
-
-.story .invitation-copy {
-  width: min(720px, 100%);
-  margin: 0 auto;
-  text-align: center;
-  font-size: 19px;
-  line-height: 2;
-}
-
-.story .invitation-copy p {
-  margin: 0 0 6px;
 }
 
 @media (max-width: 760px) {
@@ -619,12 +637,13 @@ footer a {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 18px;
+    gap: 22px;
     white-space: nowrap;
   }
 
   .nav-links a:nth-of-type(1),
-  .nav-links a:nth-of-type(4) {
+  .nav-links a:nth-of-type(4),
+  .nav-links span {
     display: none;
   }
 
@@ -672,11 +691,15 @@ footer a {
     padding: 72px 18px;
   }
 
+  .rsvp {
+    padding-bottom: 0;
+  }
+
   .rsvp-card {
-  padding: 26px 20px 44px;
-  border-radius: 28px;
-  margin-bottom: 24px;
-}
+    padding: 26px 20px 44px;
+    border-radius: 28px;
+    margin-bottom: 24px;
+  }
 
   .step-meta {
     align-items: flex-start;
@@ -716,27 +739,7 @@ footer a {
     height: 88px;
   }
 
- footer {
-  margin-top: 0;
-}
-
-.success-copy {
-  margin: 0;
-  font-size: 18px;
-}
-
-.success-date {
-  margin: 18px 0;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 48px;
-  color: var(--green-deep);
-  letter-spacing: .08em;
-}
-
-.signature {
-  margin-top: 36px;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 42px;
-  color: var(--green-deep);
-  letter-spacing: .05em;
+  footer {
+    margin-top: 0;
+  }
 }
