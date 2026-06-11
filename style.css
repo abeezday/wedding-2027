@@ -585,6 +585,22 @@ footer a {
   opacity: .82;
 }
 
+.story .section-inner {
+  text-align: center;
+}
+
+.story .invitation-copy {
+  width: min(720px, 100%);
+  margin: 0 auto;
+  text-align: center;
+  font-size: 19px;
+  line-height: 2;
+}
+
+.story .invitation-copy p {
+  margin: 0 0 6px;
+}
+
 @media (max-width: 760px) {
 .nav {
   width: calc(100% - 24px);
