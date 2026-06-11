@@ -216,15 +216,11 @@ function buildPayload() {
     [ENTRY.messageDigital]: message
   };
 
-  if (!attending) {
-    payload.pageHistory = "0,4";
-  } else if (invitation.includes("digital")) {
-    payload.pageHistory = "0,1,2";
-  } else if (invitation.includes("wedding invitation card")) {
-    payload.pageHistory = "0,1,3";
-  } else {
-    payload.pageHistory = "0,1";
-  }
+const payload = {
+  ...
+};
+
+return payload;  
 
   return payload;
 }
