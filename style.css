@@ -707,3 +707,23 @@ footer a {
     flex-direction: row;
   }
 }
+.success-copy {
+  margin: 0;
+  font-size: 18px;
+}
+
+.success-date {
+  margin: 18px 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 48px;
+  color: var(--green-deep);
+  letter-spacing: .08em;
+}
+
+.signature {
+  margin-top: 36px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 42px;
+  color: var(--green-deep);
+  letter-spacing: .05em;
+}
